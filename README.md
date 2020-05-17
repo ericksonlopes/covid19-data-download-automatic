@@ -1,7 +1,4 @@
-# covid19-data-download-automatico
-Aplicação em si faz o download de forma automática do arquivo disponibilizado pelo governo, transformando em csv, fazendo verificação dia a dia 
-
-
+# Como funciona:
 
 Ao executar pela primeira vez, útilizando a biblioteca selenium o navegador do chrome é aberto no site https://covid.saude.gov.br/ 
 ![9038ab71-dc64-4b09-9a25-ea857a8dfeba](https://user-images.githubusercontent.com/62525983/82153352-4cf87600-983d-11ea-8972-67eebbf659ab.jpg)
