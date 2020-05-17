@@ -11,11 +11,12 @@ class CovidCase:
     def __init__(self):
         # variavel com o nome do arquivo que armazena as datas
         self.arquivo_data = 'date.txt'
+        self.pasta_arquivos = 'arquivos'
 
         # verifica se a pasta não existe
-        if not os.path.exists('arquivos_csv'):
+        if not os.path.exists(self.pasta_arquivos):
             # cria a pasta
-            os.mkdir('arquivos_csv')
+            os.mkdir(self.pasta_arquivos)
 
         # verifica se o arquivo não existe
         if not os.path.exists(self.arquivo_data):
@@ -30,6 +31,7 @@ class CovidCase:
             # verifica se a ultima data é equivalente ao dia atual
             if data_atual not in file.read().split('\n')[-2].split(',')[0]:
                 print('Data de Hoje Desatualizada')
+
                 # executa a função que retorna a ultima atualização do site,
                 # verificando se existe essa data dentro do arquivo(selenium), se não existir, pela essa parte
                 if self.busca_data() not in self.busca_data_arquivo():
@@ -37,12 +39,6 @@ class CovidCase:
                     self.baixar_novo_arquivo()
                     # salva a data atual no arquivo, acrescentando 'atualizado' por ter baixado o arquivo
                     self.salva_dados(data_atual + ',atualizado')
-                    # esta parte converte o arquivo 'xlsx' para csv, os itens dentro da pasta
-                    for item in os.listdir('arquivos_csv'):
-                        # verifica se o final é 'xlsx'
-                        if item[-4:] == 'xlsx':
-                            # renomeia o arquivo para ter o final 'csv
-                            os.rename(f'arquivos_csv/{item}', f'arquivos_csv/{item[:-5] + ".csv"}')
 
                 # Caso a data de atualização do site seja equivalente a data atual
                 else:
@@ -62,7 +58,7 @@ class CovidCase:
     def busca_data(self):
         try:
             # diretório onde será salvo o arquivo
-            download_dir = os.path.join(os.getcwd(), 'arquivos_csv')
+            download_dir = os.path.join(os.getcwd(), self.pasta_arquivos)
             # convoca a função de opções do webdriver
             self.chrome_options = webdriver.ChromeOptions()
             # modifica o lugar onde o download será enviado
@@ -106,11 +102,10 @@ class CovidCase:
         else:
             print('Download file')
 
-    # classe método para buscar as datas dos arquivos que estão nos nomes
-    @classmethod
-    def busca_data_arquivo(cls):
+    # classe para buscar as datas dos arquivos que estão nos nomes
+    def busca_data_arquivo(self):
         # lista o conteudo da pasta
-        pasta_csv = os.listdir('arquivos_csv')
+        pasta_csv = os.listdir(self.pasta_arquivos)
         lista = []
         # percorre os itens encontrado
         for item in pasta_csv:
