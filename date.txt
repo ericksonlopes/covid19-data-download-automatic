@@ -1,2 +1,3 @@
-15052020,atualizada
+15052020,atualizado
 16052020,desatualizado
+17052020,atualizado
